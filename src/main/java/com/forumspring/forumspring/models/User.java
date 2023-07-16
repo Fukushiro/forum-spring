@@ -4,13 +4,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "user_tb")
+@Table(name = "user_tb", uniqueConstraints = {@UniqueConstraint(name = "UniqueUsername", columnNames =  {"username"})})
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,7 +19,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
     @Column(name = "password", nullable = false)
     private String password;
