@@ -13,7 +13,6 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "post")
-@CrossOrigin(allowCredentials = "*")
 public class Post implements Serializable {
 
     private static final long serialVersionUID = 1L;

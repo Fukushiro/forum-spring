@@ -20,6 +20,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/posts")
+@CrossOrigin(allowedHeaders = "*")
 public class PostController {
 
     @Autowired

@@ -1,6 +1,7 @@
 package com.forumspring.forumspring.controllers;
 
 import com.forumspring.forumspring.dtos.UserDto;
+import com.forumspring.forumspring.dtos.UserReturnDto;
 import com.forumspring.forumspring.models.User;
 import com.forumspring.forumspring.repositories.UserRepository;
 import com.forumspring.forumspring.services.UserService;
@@ -12,9 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(allowedHeaders = "*")
 public class UserController {
 
     @Autowired
@@ -26,6 +29,15 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Object> createUser(@RequestBody @Valid UserDto userDto){
         return ResponseEntity.ok().body(userService.createUser(userDto));
+    }
+
+    @PostMapping(value = "/auth")
+    public ResponseEntity<Object> authUser(@RequestBody @Valid UserDto userDto){
+        UserReturnDto user = userService.authUser(userDto);
+        if(Objects.isNull(user)){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(user);
     }
 
     @GetMapping ResponseEntity<List<User>> getAllUsers(){
