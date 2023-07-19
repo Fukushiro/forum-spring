@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -29,6 +30,10 @@ public class Post implements Serializable {
     @JoinColumn(name = "user_id")
     @JsonManagedReference
     private User user;
+
+    @OneToMany(mappedBy = "post")
+    @JsonBackReference
+    private List<Comment> commentList;
 
     @Column(name = "createDate", nullable = false)
     @CreationTimestamp

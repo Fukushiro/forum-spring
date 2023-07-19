@@ -32,7 +32,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf->csrf.disable()).cors(cors->cors.disable())
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("*", "/users/auth", "/posts/{id}").permitAll()
+                        .requestMatchers("*", "/users/auth", "/posts/{id}", "/comments/post/{idPost}").permitAll()
                         .anyRequest().authenticated()
                 );
 

@@ -29,6 +29,10 @@ public class User implements Serializable {
     @JsonBackReference
     private List<Post> posts;
 
+    @OneToMany(mappedBy = "user")
+    @JsonBackReference
+    private List<Comment> comments;
+
     public List<Post> getPosts() {
         return posts;
     }
@@ -59,6 +63,14 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 
     @Override
