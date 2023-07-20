@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -34,6 +35,12 @@ public class CommentService {
               comment.setUser(user.get());
               comment.setPost(post.get());
               comment.setCreateDate(new Date());
+              if(Objects.nonNull(commentCreateDto.getParentComment())){
+                  Optional<Comment> parentComment =  commentRepository.findById(commentCreateDto.getParentComment());
+                  if(parentComment.isPresent()){
+                    comment.setParentCommentary(parentComment.get());
+                  }
+              }
               comment = commentRepository.save(comment);
               return comment;
           }

@@ -17,6 +17,15 @@ public class CommentCreateDto {
     @NotNull
     private UUID postId;
 
+    private UUID parentComment;
+
+    public UUID getParentComment() {
+        return parentComment;
+    }
+
+    public void setParentComment(UUID parentComment) {
+        this.parentComment = parentComment;
+    }
 
     public String getText() {
         return text;

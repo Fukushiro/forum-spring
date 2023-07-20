@@ -48,9 +48,16 @@ public class CommentController {
             @PageableDefault(page = 0, size = 10, sort = "createDate", direction = Sort.Direction.ASC) Pageable pageable,
             @PathVariable("idPost") UUID idPost
             ){
-        System.out.println("#getPostComments");
         return ResponseEntity.status(HttpStatus.OK).body(commentRepository.findAllByPostId(idPost, pageable));
 
+    }
+
+    @GetMapping("/subcomments/{idComment}")
+    public ResponseEntity<Page<Comment>> getSubComments  (
+            @PageableDefault(page = 0, size = 10, sort = "createDate", direction = Sort.Direction.ASC) Pageable pageable,
+            @PathVariable("idComment") UUID idComment
+    ){
+        return ResponseEntity.status(HttpStatus.OK).body(commentRepository.findAllSubComments(idComment, pageable));
     }
 
 

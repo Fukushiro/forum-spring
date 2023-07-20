@@ -13,6 +13,12 @@ import java.util.UUID;
 
 public interface CommentRepository extends JpaRepository<Comment, UUID> {
 
-    @Query("SELECT c FROM Comment c WHERE c.post.id=?1")
+    @Query("SELECT c FROM Comment c WHERE c.post.id=?1 AND c.parentCommentary = null")
     public Page<Comment> findAllByPostId(UUID postId, Pageable pageable);
+
+    @Query("SELECT c FROM Comment c WHERE c.parentCommentary != null AND c.parentCommentary.id =?1")
+    public Page<Comment> findAllSubComments(UUID commentId, Pageable pageable);
+
+
+
 }

@@ -1,11 +1,13 @@
 package com.forumspring.forumspring.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -34,6 +36,31 @@ public class Comment implements Serializable {
     @CreationTimestamp
     private Date createDate;
 
+    @OneToMany(mappedBy = "parentCommentary", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Comment> childCommentaries;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_commentary_id")
+    @JsonManagedReference
+    private Comment parentCommentary;
+
+
+    public List<Comment> getChildCommentaries() {
+        return childCommentaries;
+    }
+
+    public void setChildCommentaries(List<Comment> childCommentaries) {
+        this.childCommentaries = childCommentaries;
+    }
+
+    public Comment getParentCommentary() {
+        return parentCommentary;
+    }
+
+    public void setParentCommentary(Comment parentCommentary) {
+        this.parentCommentary = parentCommentary;
+    }
 
     public Post getPost() {
         return post;

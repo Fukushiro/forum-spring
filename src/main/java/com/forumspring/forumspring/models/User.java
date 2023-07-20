@@ -33,6 +33,7 @@ public class User implements Serializable {
     @JsonBackReference
     private List<Comment> comments;
 
+
     public List<Post> getPosts() {
         return posts;
     }
