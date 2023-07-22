@@ -12,7 +12,6 @@ public class ForumSpringApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ForumSpringApplication.class, args);
 	}
-
 	@GetMapping
 	public String HelloWorld() {
 		return "Hello world";
