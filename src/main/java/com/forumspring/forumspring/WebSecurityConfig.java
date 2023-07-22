@@ -34,56 +34,36 @@ public class WebSecurityConfig {
 //                .addScript(JdbcDaoImpl.DEFAULT_USER_SCHEMA_DDL_LOCATION)
 //                .build();
 //    }
-//    @Bean
-//    public InMemoryUserDetailsManager userDetailsService() {
+    @Bean
+    public UserDetailsService  userDetailsService() {
+        UserDetails user = User.withUsername("user")
+                .password(passwordEncoder().encode("password"))
+
+                .authorities("USER")
+                .build();
+
+        UserDetails admin = User.withUsername("admin")
+                .password(passwordEncoder().encode("password"))
+                .authorities("USER", "ADMIN")
+                .build();
+        return new InMemoryUserDetailsManager(admin, user);
+    }
 //
-////        UserDetails user = User.builder()
-////                .username("user")
-////                .password("password")
-////                .roles("USER")
-////                .build();
-////        UserDetails admin = User.builder()
-////                .username("admin")
-////                .password("password")
-////                .roles("USER", "ADMIN")
-////                .build();
-//
-//        UserDetails user2 =
-//                User.withDefaultPasswordEncoder()
-//                        .username("user")
-//                        .password("password")
-//                        .roles("USER", "ADMIN")
-//                        .build();
-//
-//        UserDetails user3 = User.withUsername("user")
-//                .password("password")
-//                .roles("USER", "ADMIN")
-//                .build();
-//
-//        UserDetails admin = User.withDefaultPasswordEncoder()
-//                .username("admin")
-//                .password("password")
-//                .authorities("USER")
-//                .roles("USER", "ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(admin);
-//    }
-//
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//
-//        System.out.println(http);
-//        http.csrf(csrf->csrf.disable()).cors(cors->cors.disable()).authorizeHttpRequests((requests) -> requests
-//                .requestMatchers( "/").permitAll()
-//                .requestMatchers("/posts").hasRole("USER")
-//                .requestMatchers(
-//                        "/users/auth", "/posts/{id}", "/comments/post/{idPost}", "/comments/subcomments/{idComment}"
-//                ).hasRole("USER")
-//                .anyRequest().authenticated()
-//        ).httpBasic(withDefaults());
-//
-//        return http.build();
-//    }
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
+        System.out.println(http);
+        http.csrf(csrf->csrf.disable()).cors(cors->cors.disable()).authorizeHttpRequests((requests) -> requests
+                .requestMatchers( "/").permitAll()
+                .requestMatchers(
+                        "/users/auth", "/posts/{id}", "/comments/post/{idPost}", "/comments/subcomments/{idComment}",
+                        "/posts"
+                ).hasAuthority("USER")
+                .anyRequest().authenticated()
+        ).httpBasic(withDefaults());
+
+        return http.build();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder(){
