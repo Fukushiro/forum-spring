@@ -17,7 +17,8 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(allowedHeaders = "*")
+//@CrossOrigin(allowedHeaders = "*")
+@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -33,6 +34,7 @@ public class UserController {
 
     @PostMapping(value = "/auth")
     public ResponseEntity<Object> authUser(@RequestBody @Valid UserDto userDto){
+        System.out.println("#AUTH");
         UserReturnDto user = userService.authUser(userDto);
         if(Objects.isNull(user)){
             return ResponseEntity.notFound().build();

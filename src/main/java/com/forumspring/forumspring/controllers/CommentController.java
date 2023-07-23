@@ -26,7 +26,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/comments")
-@CrossOrigin(allowedHeaders = "*")
+//@CrossOrigin(allowedHeaders = "*")
+@CrossOrigin
 public class CommentController {
 
     @Autowired
