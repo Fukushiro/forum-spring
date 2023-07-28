@@ -18,7 +18,7 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/users")
 //@CrossOrigin(allowedHeaders = "*")
-@CrossOrigin
+//@CrossOrigin
 public class UserController {
 
     @Autowired
